@@ -33,7 +33,7 @@ watch(
 );
 
 function connect() {
-  ws.value = new WebSocket("ws://localhost:4321");
+  ws.value = new WebSocket("wss://api.chat.nbtb.eu");
 
   ws.value.addEventListener("open", () => {
     status.connected = true;
