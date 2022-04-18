@@ -13,23 +13,23 @@ const form = ref({
 });
 
 async function submit() {
-  if (this.form.username.length < 3) {
-    this.uInputError = true;
-  } else if (this.form.password.length < 7) {
-    this.pInputError = true;
-    this.form.password = "";
+  if (form.value.username.length < 3) {
+    uInputError.value = true;
+  } else if (form.value.password.length < 7) {
+    pInputError.value = true;
+    form.value.password = "";
   } else {
     const secret = prompt(
-      "Write some random phrase here to generate encrytption keys. You don't need to remember this."
+      "Write some random phrase here to generate encrytption keys. You don't need to remember "
     );
     
-    await generateKeys({...this.form.value, secret});
+    await generateKeys({...form.value.value, secret});
     
-    this.form.pubKey = sessionStorage.getItem("pubKey");
-    props.ws.send(JSON.stringify({ msgType: "register", ...this.form }));
+    form.value.pubKey = sessionStorage.getItem("pubKey");
+    props.ws.send(JSON.stringify({ msgType: "register", ...form.value }));
 
-    sessionStorage.setItem('username', this.form.username);
-    sessionStorage.setItem('password', this.form.password); //I will do smth with this
+    sessionStorage.setItem('username', form.value.username);
+    sessionStorage.setItem('password', form.value.password); //I will do smth with this
     sessionStorage.setItem('secret', secret);
     sessionStorage.setItem('contacts', JSON.stringify([]));
     sessionStorage.setItem("messages", "[]");
